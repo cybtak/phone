@@ -19,24 +19,57 @@ const facebookIcon = document.getElementById('facebook');
 const twitterIcon = document.getElementById('twitter');
 const instagramIcon = document.getElementById('instagram');
 const cameraIcon = document.getElementById('camera');
+const contactsIcon = document.getElementById('contacts');
 // Home screen and app content elements
 const homeScreen = document.querySelector('.home-screen');
 const appContent = document.querySelector('.app-content');
 
 // Function to load app content
+// Function to load app content
 function loadAppContent(appName) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', `${appName}.html`, true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            // Hide home screen and display app content
-            homeScreen.style.display = 'none';
-            appContent.innerHTML = xhr.responseText;
-            appContent.style.display = 'block';
-        }
-    };
-    xhr.send();
+    if (appName === 'camera') {
+        // Try to access the camera
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then((stream) => {
+                // If permission is granted, show the camera view
+                const videoElement = document.createElement('video');
+                videoElement.srcObject = stream;
+                videoElement.autoplay = true;
+                appContent.innerHTML = '';
+                appContent.appendChild(videoElement);
+                appContent.style.display = 'block';
+            })
+            .catch((error) => {
+                console.error('Error accessing the camera:', error);
+                // Show a message to the user to grant permission
+                alert('Please grant permission to access the camera.');
+            });
+    } else {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', `${appName}.html`, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // Hide home screen and display app content
+                homeScreen.style.display = 'none';
+                appContent.innerHTML = xhr.responseText;
+                appContent.style.display = 'block';
+            }
+        };
+        xhr.send();
+    }
 }
+
+// Add click event listener to camera icon
+cameraIcon.addEventListener('click', () => {
+    // Load camera app content
+    loadAppContent('camera');
+});
+// Add click event listener to camera icon
+cameraIcon.addEventListener('click', () => {
+    // Load camera app content
+    loadAppContent('camera');
+});
+
 
 // Add click event listeners to app icons
 browserIcon.addEventListener('click', () => {
@@ -57,6 +90,10 @@ instagramIcon.addEventListener('click', () => {
 
 cameraIcon.addEventListener('click', () => {
     loadAppContent('camera');
+});
+
+contactsIcon.addEventListener('click', () => {
+    loadAppContent('contacts');
 });
 
 // Get navigation button
