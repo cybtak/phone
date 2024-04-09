@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacts</title>
+</head>
+<body>
+    <h1>Contacts App</h1>
+    <ul id="contact-list"></ul>
+    
+    <script>
+        // Request permission to access contacts
+        navigator.contacts.requestPermission().then(() => {
+            // Permission granted, access contacts
+            navigator.contacts.getAll().then((contacts) => {
+                const contactList = document.getElementById('contact-list');
+                contacts.forEach((contact) => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = contact.name;
+                    contactList.appendChild(listItem);
+                });
+            }).catch((error) => {
+                console.error('Error accessing contacts:', error);
+            });
+        }).catch((error) => {
+            console.error('Error requesting permission:', error);
+        });
+    </script>
+</body>
+</html>

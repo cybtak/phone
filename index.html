@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android Phone Interface</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <!-- Phone Frame -->
+    <div class="phone">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="time">10:00</div>
+            <div class="network"><i class="fas fa-wifi"></i></div>
+            <div class="battery">100% <i class="fas fa-battery-full"></i></div>
+        </div>
+
+        <!-- Home Screen -->
+        <div class="home-screen">
+            <!-- App Icons -->
+            <div class="app-icon" id="browser">
+                <i class="fab fa-chrome"></i>
+                <span>Browser</span>
+            </div>
+            <div class="app-icon" id="facebook">
+                <i class="fab fa-facebook"></i>
+                <span>Facebook</span>
+            </div>
+            <div class="app-icon" id="twitter">
+                <i class="fab fa-twitter"></i>
+                <span>Twitter</span>
+            </div>
+            <div class="app-icon" id="instagram">
+                <i class="fab fa-instagram"></i>
+                <span>Instagram</span>
+            </div>
+            <div class="app-icon" id="camera">
+                <i class="fas fa-camera"></i>
+                <span>Camera</span>
+            </div>
+            <div class="app-icon" id="contacts">
+                <i class="fas fa-address-book"></i>
+                <span>Contacts</span>
+            </div>
+        </div>
+
+        <!-- App Content -->
+        <div class="app-content">
+            <!-- Content of the opened app will be loaded here -->
+        </div>
+
+        <!-- Navigation Button -->
+        <div class="navigation-button">
+            <i class="fas fa-home"></i>
+        </div>
+    </div>
+
+    <!-- Script for clock and app navigation -->
+    <script src="script.js"></script>
+</body>
+</html>
