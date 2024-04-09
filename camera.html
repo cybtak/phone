@@ -4,14 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Camera</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
-    <h1>Camera App</h1>
     <video id="camera-stream" autoplay></video>
-    
-    <script>
-        
 
+    <script>
+        // Get the video element
+        const videoElement = document.getElementById('camera-stream');
+
+        // Try to access the camera when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then((stream) => {
+                    // If permission is granted, show the camera stream
+                    videoElement.srcObject = stream;
+                })
+                .catch((error) => {
+                    console.error('Error accessing the camera:', error);
+                    // Show a message to the user to grant permission
+                    alert('Please grant permission to access the camera.');
+                });
+        });
     </script>
 </body>
 </html>

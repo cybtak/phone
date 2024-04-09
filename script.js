@@ -25,51 +25,44 @@ const homeScreen = document.querySelector('.home-screen');
 const appContent = document.querySelector('.app-content');
 
 // Function to load app content
-// Function to load app content
 function loadAppContent(appName) {
-    if (appName === 'camera') {
-        // Try to access the camera
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then((stream) => {
-                // If permission is granted, show the camera view
-                const videoElement = document.createElement('video');
-                videoElement.srcObject = stream;
-                videoElement.autoplay = true;
-                appContent.innerHTML = '';
-                appContent.appendChild(videoElement);
-                appContent.style.display = 'block';
-            })
-            .catch((error) => {
-                console.error('Error accessing the camera:', error);
-                // Show a message to the user to grant permission
-                alert('Please grant permission to access the camera.');
-            });
-    } else {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', `${appName}.html`, true);
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // Hide home screen and display app content
-                homeScreen.style.display = 'none';
-                appContent.innerHTML = xhr.responseText;
-                appContent.style.display = 'block';
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `${appName}.html`, true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // Hide home screen and display app content
+            homeScreen.style.display = 'none';
+            appContent.innerHTML = xhr.responseText;
+            appContent.style.display = 'block';
+            
+            // If the loaded app is the camera, attempt to access the camera
+            if (appName === 'camera') {
+                tryAccessCamera();
             }
-        };
-        xhr.send();
-    }
+        }
+    };
+    xhr.send();
 }
 
-// Add click event listener to camera icon
-cameraIcon.addEventListener('click', () => {
-    // Load camera app content
-    loadAppContent('camera');
-});
-// Add click event listener to camera icon
-cameraIcon.addEventListener('click', () => {
-    // Load camera app content
-    loadAppContent('camera');
-});
-
+// Function to attempt accessing the camera
+function tryAccessCamera() {
+    // Try to access the camera
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then((stream) => {
+            // If permission is granted, show the camera view
+            const videoElement = document.createElement('video');
+            videoElement.srcObject = stream;
+            videoElement.autoplay = true;
+            appContent.innerHTML = '';
+            appContent.appendChild(videoElement);
+            appContent.style.display = 'block';
+        })
+        .catch((error) => {
+            console.error('Error accessing the camera:', error);
+            // Show a message to the user to grant permission
+            alert('Please grant permission to access the camera.');
+        });
+}
 
 // Add click event listeners to app icons
 browserIcon.addEventListener('click', () => {
@@ -88,12 +81,9 @@ instagramIcon.addEventListener('click', () => {
     loadAppContent('instagram');
 });
 
+// Add click event listener to camera icon
 cameraIcon.addEventListener('click', () => {
     loadAppContent('camera');
-});
-
-contactsIcon.addEventListener('click', () => {
-    loadAppContent('contacts');
 });
 
 // Get navigation button
@@ -105,3 +95,4 @@ navigationButton.addEventListener('click', () => {
     homeScreen.style.display = 'grid';
     appContent.style.display = 'none';
 });
+
