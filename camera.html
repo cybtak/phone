@@ -19,28 +19,59 @@
             width: 100%;
             height: auto;
         }
+
+        .message {
+            color: #fff;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .retry-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
-    <video id="camera-stream" autoplay></video>
+    <div id="camera-container">
+        <video id="camera-stream" autoplay></video>
+        <div id="message" class="message">Attempting to access the camera...</div>
+        <button id="retry-button" class="retry-button" style="display: none;">Retry</button>
+    </div>
 
     <script>
         // Get the video element
         const videoElement = document.getElementById('camera-stream');
+        const messageElement = document.getElementById('message');
+        const retryButton = document.getElementById('retry-button');
 
-        // Try to access the camera when the page loads
-        document.addEventListener('DOMContentLoaded', () => {
+        // Function to attempt accessing the camera
+        function tryAccessCamera() {
             navigator.mediaDevices.getUserMedia({ video: true })
                 .then((stream) => {
                     // If permission is granted, show the camera stream
                     videoElement.srcObject = stream;
+                    messageElement.style.display = 'none';
+                    retryButton.style.display = 'none';
                 })
                 .catch((error) => {
                     console.error('Error accessing the camera:', error);
                     // Show a message to the user to grant permission
-                    alert('Please grant permission to access the camera.');
+                    messageElement.textContent = 'Please grant permission to access the camera.';
+                    retryButton.style.display = 'block';
                 });
-        });
+        }
+
+        // Attempt to access the camera when the page loads
+        document.addEventListener('DOMContentLoaded', tryAccessCamera);
+
+        // Add click event listener to the retry button
+        retryButton.addEventListener('click', tryAccessCamera);
     </script>
 </body>
 </html>
